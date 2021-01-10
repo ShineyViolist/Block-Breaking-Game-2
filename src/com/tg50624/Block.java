@@ -1,37 +1,33 @@
 package com.tg50624;
-
+import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
-import javax.imageio.ImageIO;
 
 public class Block extends Rectangle {
-    Image imga;
-    boolean destroyed = false;
-    int a;
-    int b;
+    Image img;
+    int a, b;
 
-    Block(int x, int y, int w, int h, String s){
+    Block(int x,int y, int width, int height, String s){
         this.x = x;
         this.y = y;
-        this.width = w;
-        this.height = h;
-        a = 3;
-        b = 3;
+        this.width = width;
+        this.height = height;
+        a = 10;
+        b = 10;
 
         try{
-            imga = ImageIO.read(new File("src/" + s));
+            img = ImageIO.read(new File("C:\\Users\\17185\\IdeaProjects\\Networking\\3\\Block Breaking Game Restart\\src\\" + s));
+            //System.out.println(img);
         }
-        catch(IOException e){
+
+        catch (IOException e){
             e.printStackTrace();
-            System.out.println(e);
         }
     }
 
     public void draw(Graphics g, Component c){
-        //g.drawImage(imga,x,y,width,height,c);
-        if(!destroyed){
-            g.drawImage(imga,x,y,width,height,c);
-        }
+        g.drawImage(img,x,y,width, height,c);
     }
 }
+
