@@ -7,48 +7,21 @@ import java.awt.event.KeyListener;
 import java.util.ArrayList;
 
 public class BlockPanel extends JPanel implements KeyListener {
-
-    ArrayList <Block> blocks = new ArrayList <Block> ();
-
+    ArrayList<Block> blocks = new ArrayList<Block>();
     Block ball = new Block(400,450, 40,40,"ball.png");
-
-    Block paddle = new Block(100,750, 80,20, "paddle.png");
+    Block paddle = new Block(100,750,70,20,"paddle.png");
 
     BlockPanel(){
-        for(int i = 0; i < 10; i++){
-            blocks.add(new Block((i*60) + 5,15,80,30,"block1.png"));
-            //System.out.println("here");
-        }
-
-        for(int i = 0; i < 10; i++){
-            blocks.add(new Block((i*60) + 5,30,40,30,"block3.png"));
-        }
-
-        for(int i = 0; i < 10; i++){
-            blocks.add(new Block((i*60) + 5,60,80,30,"block2.png"));
+        for(int i = 0; i < 5; i++){
+            blocks.add(new Block(i + 50, 20,40,20,"block1.png"));
         }
 
         addKeyListener(this);
         setFocusable(true);
     }
 
-    public void paintComponent(Graphics g){
-
-        //super();
-        System.out.println("here");
-
-        blocks.forEach(block -> {
-            block.draw(g,this);
-        });
-
-
-        ball.draw(g,this);
-
-        paddle.draw(g,this);
-    }
-
     public void update(){
-        ball.x = ball.x + ball.a;
+        ball.x += ball.a;
         ball.y += ball.b;
         repaint();
     }
@@ -58,26 +31,26 @@ public class BlockPanel extends JPanel implements KeyListener {
 
     }
 
+
     @Override
     public void keyPressed(KeyEvent e) {
-        System.out.println("Here too");
         if(e.getKeyCode() == KeyEvent.VK_ENTER){
-
             new Thread(() -> {
                 while(true){
                     update();
-                    try{
+                    try {
                         Thread.sleep(10);
-                    }
-                    catch(InterruptedException err){
-                        err.printStackTrace();
+                    } catch (InterruptedException interruptedException) {
+                        interruptedException.printStackTrace();
                     }
                 }
             }).start();
         }
+
         if(e.getKeyCode() == KeyEvent.VK_LEFT){
             paddle.x += -10;
         }
+
         if(e.getKeyCode() == KeyEvent.VK_RIGHT){
             paddle.x += 10;
         }
@@ -86,5 +59,14 @@ public class BlockPanel extends JPanel implements KeyListener {
     @Override
     public void keyReleased(KeyEvent e) {
 
+    }
+
+    public void paintComponent(Graphics g){
+        blocks.forEach(block -> {
+            block.draw(g,this);
+        });
+        //System.out.println("Hello");
+        ball.draw(g,this);
+        paddle.draw(g,this);
     }
 }
